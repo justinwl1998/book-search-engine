@@ -19,7 +19,7 @@ The server hosts a website that allows for searching for books and creating acco
 
 ## Preview of Website
 
-![Website preview](/public/preview.png)
+![Website preview](/assets/preview.png)
 
 ## Author
 
