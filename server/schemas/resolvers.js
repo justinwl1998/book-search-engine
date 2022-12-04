@@ -7,7 +7,6 @@ const resolvers = {
         me: async (parent, args, context) => {
             if (context.user) {
                 const userData = await User.findOne({ _id: context.user._id }).select("-__v -password");
-
                 return userData;
             }
 
@@ -36,7 +35,7 @@ const resolvers = {
         },
         saveBook: async (parent, { argBody }, context) => {
             if (context.user) {
-                const userData = await User.findOneAndUpdate(
+                const userData = await User.findByIdAndUpdate(
                     {_id: context.user._id},
                     { $pull: { savedBooks: { bookId: bookId} }},
                     { new: true }
@@ -44,6 +43,21 @@ const resolvers = {
 
                 return userData;
             }
+
+            throw new AuthenticationError('You need to be logged in to save books.');
+        },
+        removeBook: async (parent, { bookId }, context) => {
+            if (context.user) {
+                const userData = await User.findByIdAndUpdate(
+                    {_id: context.user._id },
+                    { $pull: { savedBooks: { bookId: bookId }}},
+                    { new: true }
+                );
+
+                return userData;
+            }
+
+            throw new AuthenticationError('You need to be logged in to remove books.');
         }
     }
 };
