@@ -10,7 +10,12 @@ import { REMOVE_BOOK } from '../utils/mutations';
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(GET_ME);
+
+  console.log("data: ", data);
+
   const userData = data?.me || {};
+
+  console.log("userData: ", userData)
 
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
@@ -39,6 +44,7 @@ const SavedBooks = () => {
   if (!userDataLength) {
     return <h2>LOADING...</h2>;
   }
+  
 
   return (
     <>

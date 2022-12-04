@@ -5,12 +5,19 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
     Query: {
         me: async (parent, args, context) => {
+            console.log('QUERY_ME called')
             if (context.user) {
-                const userData = await User.findOne({ _id: context.user._id }).select("-__v -password");
+                const userData = await User.findOne({ _id: context.user._id }).select(
+                    "-__v -password"
+                );
+                console.log(userData)
                 return userData;
             }
 
             throw new AuthenticationError('Not logged in');
+        },
+        users: async () => {
+            return User.find({});
         }
     },
     Mutation: {
@@ -35,10 +42,10 @@ const resolvers = {
         },
         saveBook: async (parent, { input }, context) => {
             if (context.user) {
-                const userData = await User.findByIdAndUpdate(
+                const userData = await User.findOneAndUpdate(
                     {_id: context.user._id},
-                    { $pull: { savedBooks: { input }}},
-                    { new: true }
+                    { $addToSet: { savedBooks: input }},
+                    { new: true, runValidators: true }
                 );
 
                 return userData;
