@@ -21,6 +21,8 @@ The server hosts a website that allows for searching for books and creating acco
 
 ![Website preview](/assets/preview.png)
 
+Visit the live site [here](https://damp-beach-72957.herokuapp.com).
+
 ## Author
 
 Created by Justin Liu.
